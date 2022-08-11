@@ -99,6 +99,27 @@ public static class Keybinds
     }
 
     /// <summary>
+    /// Is a key currently being pressed/hold down in a specific keyset
+    /// </summary>
+    public static bool IsAKeyPressed(Keys.KeyNames keyName, KeySetDef.KeySet keySet)
+    {
+        foreach (KeySetDef keySetDef in keysDef)
+        {
+            if (keySetDef.keySet != keySet) continue;
+
+            foreach (Keys keys in keySetDef.keys)
+            {
+                if (keys.keyName != keyName) continue;
+                if (!Input.GetKey(keys.key)) continue;
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Is a key released this frame
     /// </summary>
     public static bool IsAKeyReleased(Keys.KeyNames keyName, bool isMovement)
@@ -120,6 +141,27 @@ public static class Keybinds
     }
 
     /// <summary>
+    /// Is a key released this frame in a specific keyset
+    /// </summary>
+    public static bool IsAKeyReleased(Keys.KeyNames keyName, KeySetDef.KeySet keySet)
+    {
+        foreach (KeySetDef keySetDef in keysDef)
+        {
+            if (keySetDef.keySet != keySet) continue;
+
+            foreach (Keys keys in keySetDef.keys)
+            {
+                if (keys.keyName != keyName) continue;
+                if (!Input.GetKeyUp(keys.key)) continue;
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Is a key down for the first time this frame (not hold)
     /// </summary>
     public static bool IsAKeyDown(Keys.KeyNames keyName, bool isMovement)
@@ -127,6 +169,27 @@ public static class Keybinds
         foreach (KeySetDef keySetDef in keysDef)
         {
             if (keySetDef.isMovement != isMovement) continue;
+
+            foreach (Keys keys in keySetDef.keys)
+            {
+                if (keys.keyName != keyName) continue;
+                if (!Input.GetKeyDown(keys.key)) continue;
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Is a key down for the first time this frame (not hold) in a specific keyset
+    /// </summary>
+    public static bool IsAKeyDown(Keys.KeyNames keyName, KeySetDef.KeySet keySet)
+    {
+        foreach (KeySetDef keySetDef in keysDef)
+        {
+            if (keySetDef.keySet != keySet) continue;
 
             foreach (Keys keys in keySetDef.keys)
             {
